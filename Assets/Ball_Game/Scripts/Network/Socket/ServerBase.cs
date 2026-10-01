@@ -48,8 +48,8 @@ public class ServerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
-            throw;
+            LogMsg.Info(e.Message);
+            Disconnect();
         }
         
        
@@ -87,8 +87,8 @@ public class ServerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
-            throw;
+            LogMsg.Info(e.Message);
+            Disconnect();
         }
         
        
@@ -209,6 +209,14 @@ public class ServerBase
         _connState = ConnState.Disconnected;
         if (_socket != null)
         {
+            try
+            {
+                _socket.Shutdown(SocketShutdown.Both);
+            }
+            catch (Exception)
+            {
+            }
+
             _socket.Close();
             _socket=null;
         }

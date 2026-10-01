@@ -66,7 +66,23 @@ public class RoomEntry : MonoBehaviour
 
     private void OnConnFailed()
     {
-        _syncContext.Post(_ => { SetStatus("连接房间主机失败"); }, null);
+        //已经在游戏里的加入方，连上的主机突然断了
+        bool hostDown = _entered && _hostApp != null && !_hostApp.IsHost;
+        if (hostDown && NetSocketMgr.Client != null)
+        {
+            NetSocketMgr.Client._isNeedReconn = false;
+        }
+
+        _syncContext.Post(_ =>
+        {
+            if (hostDown)
+            {
+                GameRoom.NotifyHostDisconnected();
+                return;
+            }
+
+            SetStatus("连接房间主机失败");
+        }, null);
     }
 
     public void SetStatus(string text)

@@ -27,20 +27,20 @@ public static partial class BattleOfBallsReflection {
           "dGVfc2Vzc2lvbl9pZBgDIAEoBRIMCgRkYXRhGAogASgMIiQKBkVyck1zZxIa",
           "CghjbWRfY29kZRgBIAEoDjIILkNtZENvZGUiDQoLSm9pblJvb21SZXEiNAoL",
           "Sm9pblJvb21SZXQSEQoJcGxheWVyX2lkGAEgASgFEhIKCnBsYXllcl9pZHMY",
-          "AiADKAUiIwoOUGxheWVyRW50ZXJSZXQSEQoJcGxheWVyX2lkGAEgASgFIlAK",
-          "DlBsYXllcklucHV0UmVxEhEKCXBsYXllcl9pZBgBIAEoBRIOCgZtb3ZlX3gY",
-          "AiABKAISDgoGbW92ZV96GAMgASgCEgsKA3lhdxgEIAEoAiJaCgtQbGF5ZXJT",
-          "dGF0ZRIRCglwbGF5ZXJfaWQYASABKAUSDQoFcG9zX3gYAiABKAISDQoFcG9z",
-          "X3kYAyABKAISDQoFcG9zX3oYBCABKAISCwoDeWF3GAUgASgCItoBCglCYWxs",
-          "U3RhdGUSDQoFcG9zX3gYASABKAISDQoFcG9zX3kYAiABKAISDQoFcG9zX3oY",
-          "AyABKAISDQoFdmVsX3gYBCABKAISDQoFdmVsX3kYBSABKAISDQoFdmVsX3oY",
-          "BiABKAISEQoJYW5nX3ZlbF94GAcgASgCEhEKCWFuZ192ZWxfeRgIIAEoAhIR",
-          "CglhbmdfdmVsX3oYCSABKAISDQoFcm90X3gYCiABKAISDQoFcm90X3kYCyAB",
-          "KAISDQoFcm90X3oYDCABKAISDQoFcm90X3cYDSABKAIiVgoNV29ybGRTbmFw",
-          "c2hvdBIMCgR0aWNrGAEgASgFEhgKBGJhbGwYAiABKAsyCi5CYWxsU3RhdGUS",
-          "HQoHcGxheWVycxgDIAMoCzIMLlBsYXllclN0YXRlKjQKB0NtZENvZGUSCgoG",
-          "U3VjY2VkEAASDwoLU2VydmVyRXJyb3IQAhIMCghSb29tRnVsbBAQYgZwcm90",
-          "bzM="));
+          "AiADKAUiIwoOUGxheWVyRW50ZXJSZXQSEQoJcGxheWVyX2lkGAEgASgFIiIK",
+          "DVBsYXllckV4aXRSZXQSEQoJcGxheWVyX2lkGAEgASgFIlAKDlBsYXllcklu",
+          "cHV0UmVxEhEKCXBsYXllcl9pZBgBIAEoBRIOCgZtb3ZlX3gYAiABKAISDgoG",
+          "bW92ZV96GAMgASgCEgsKA3lhdxgEIAEoAiJaCgtQbGF5ZXJTdGF0ZRIRCglw",
+          "bGF5ZXJfaWQYASABKAUSDQoFcG9zX3gYAiABKAISDQoFcG9zX3kYAyABKAIS",
+          "DQoFcG9zX3oYBCABKAISCwoDeWF3GAUgASgCItoBCglCYWxsU3RhdGUSDQoF",
+          "cG9zX3gYASABKAISDQoFcG9zX3kYAiABKAISDQoFcG9zX3oYAyABKAISDQoF",
+          "dmVsX3gYBCABKAISDQoFdmVsX3kYBSABKAISDQoFdmVsX3oYBiABKAISEQoJ",
+          "YW5nX3ZlbF94GAcgASgCEhEKCWFuZ192ZWxfeRgIIAEoAhIRCglhbmdfdmVs",
+          "X3oYCSABKAISDQoFcm90X3gYCiABKAISDQoFcm90X3kYCyABKAISDQoFcm90",
+          "X3oYDCABKAISDQoFcm90X3cYDSABKAIiVgoNV29ybGRTbmFwc2hvdBIMCgR0",
+          "aWNrGAEgASgFEhgKBGJhbGwYAiABKAsyCi5CYWxsU3RhdGUSHQoHcGxheWVy",
+          "cxgDIAMoCzIMLlBsYXllclN0YXRlKjQKB0NtZENvZGUSCgoGU3VjY2VkEAAS",
+          "DwoLU2VydmVyRXJyb3IQAhIMCghSb29tRnVsbBAQYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CmdCode), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -49,6 +49,7 @@ public static partial class BattleOfBallsReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::JoinRoomReq), global::JoinRoomReq.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::JoinRoomRet), global::JoinRoomRet.Parser, new[]{ "PlayerId", "PlayerIds" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerEnterRet), global::PlayerEnterRet.Parser, new[]{ "PlayerId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerExitRet), global::PlayerExitRet.Parser, new[]{ "PlayerId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInputReq), global::PlayerInputReq.Parser, new[]{ "PlayerId", "MoveX", "MoveZ", "Yaw" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerState), global::PlayerState.Parser, new[]{ "PlayerId", "PosX", "PosY", "PosZ", "Yaw" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::BallState), global::BallState.Parser, new[]{ "PosX", "PosY", "PosZ", "VelX", "VelY", "VelZ", "AngVelX", "AngVelY", "AngVelZ", "RotX", "RotY", "RotZ", "RotW" }, null, null, null, null),
@@ -1176,6 +1177,207 @@ public sealed partial class PlayerEnterRet : pb::IMessage<PlayerEnterRet>
 }
 
 /// <summary>
+/// 有玩家退出
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class PlayerExitRet : pb::IMessage<PlayerExitRet>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<PlayerExitRet> _parser = new pb::MessageParser<PlayerExitRet>(() => new PlayerExitRet());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<PlayerExitRet> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[5]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayerExitRet() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayerExitRet(PlayerExitRet other) : this() {
+    playerId_ = other.playerId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayerExitRet Clone() {
+    return new PlayerExitRet(this);
+  }
+
+  /// <summary>Field number for the "player_id" field.</summary>
+  public const int PlayerIdFieldNumber = 1;
+  private int playerId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int PlayerId {
+    get { return playerId_; }
+    set {
+      playerId_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as PlayerExitRet);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(PlayerExitRet other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (PlayerId != other.PlayerId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (PlayerId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(PlayerId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (PlayerId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(PlayerId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (PlayerId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(PlayerExitRet other) {
+    if (other == null) {
+      return;
+    }
+    if (other.PlayerId != 0) {
+      PlayerId = other.PlayerId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          PlayerId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          PlayerId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 /// 玩家输入。只带操作，不带球的位置
 /// </summary>
 [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
@@ -1193,7 +1395,7 @@ public sealed partial class PlayerInputReq : pb::IMessage<PlayerInputReq>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[5]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1502,7 +1704,7 @@ public sealed partial class PlayerState : pb::IMessage<PlayerState>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[6]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1848,7 +2050,7 @@ public sealed partial class BallState : pb::IMessage<BallState>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[7]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2493,7 +2695,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[8]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

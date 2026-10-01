@@ -29,6 +29,50 @@ public class BallRoomPlayerMgr : Singleton<BallRoomPlayerMgr>
     public Action<int> OnPlayerEnter;
 
     /// <summary>
+    /// 有玩家退出。游戏场景用来关掉对应胶囊
+    /// </summary>
+    public Action<int> OnPlayerExit;
+
+    /// <summary>
+    /// 回到主界面时清掉上一局
+    /// </summary>
+    public void Clear()
+    {
+        LocalPlayerId = 0;
+        _playerIds.Clear();
+        OnPlayerEnter = null;
+        OnPlayerExit = null;
+    }
+
+    /// <summary>
+    /// 房间里少了一个人
+    /// </summary>
+    public void RemovePlayer(int playerId)
+    {
+        if (!_playerIds.Contains(playerId))
+        {
+            return;
+        }
+
+        _playerIds.Remove(playerId);
+        if (OnPlayerExit == null)
+        {
+            return;
+        }
+
+        if (_syncContext == null || SynchronizationContext.Current == _syncContext)
+        {
+            OnPlayerExit(playerId);
+            return;
+        }
+
+        _syncContext.Post(_ =>
+        {
+            OnPlayerExit?.Invoke(playerId);
+        }, null);
+    }
+
+    /// <summary>
     /// 主机创建房间，自己是 1 号
     /// </summary>
     public void SetLocalHost()

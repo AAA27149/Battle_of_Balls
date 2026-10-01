@@ -40,4 +40,21 @@ public class Host_WorldBC : Singleton<Host_WorldBC>
             item.Value.SendData(NetDefine.CMD_WorldSnapshotCode, snapshot.ToByteString());
         }
     }
+
+    /// <summary>
+    /// 有玩家退出，通知其它客户端
+    /// </summary>
+    public void PlayerExitBC(Session currentSession, PlayerExitRet ret)
+    {
+        Dictionary<int, Session> sessionDic = SessionMgr.Instance.GetSessionDic();
+        foreach (var item in sessionDic)
+        {
+            if (item.Value.SessionId == currentSession.SessionId)
+            {
+                continue;
+            }
+
+            item.Value.SendData(NetDefine.CMD_PlayerExitCode, ret.ToByteString());
+        }
+    }
 }

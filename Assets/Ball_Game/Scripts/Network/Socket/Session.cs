@@ -54,16 +54,45 @@ public class Session : ServerBase //一个session 代表一个连接的客户端
         
     }
 
+    private bool _hasExit;
+
     public override void Disconnect()
     {
+        if (_hasExit)
+        {
+            base.Disconnect();
+            return;
+        }
+
+        _hasExit = true;
         if (_socket != null)
         {
             LogMsg.Info("Disconnect::"+_socket.RemoteEndPoint+" 断开了连接...");
         }
-        //没有网关和数据库。断开后把这条 Session 从管理器里拿掉
+
+        //1. 已经进房的玩家退出，先通知其它人，再从名单里去掉
+        if (_roleId > 1)
+        {
+            PlayerExitRet ret = new PlayerExitRet()
+            {
+                PlayerId = _roleId,
+            };
+            Host_WorldBC.Instance.PlayerExitBC(this, ret);
+            BallRoomPlayerMgr.Instance.RemovePlayer(_roleId);
+        }
+
+        //2. 没有网关和数据库。断开后把这条 Session 从管理器里拿掉
         SessionMgr.Instance.RemoveSession(SessionId);
-        
         base.Disconnect();
-        
+    }
+
+    /// <summary>
+    /// 主机关闭时只断开这条连接，不按普通玩家退出通知
+    /// </summary>
+    public void CloseWithoutNotice()
+    {
+        _hasExit = true;
+        SessionMgr.Instance.RemoveSession(SessionId);
+        base.Disconnect();
     }
 }

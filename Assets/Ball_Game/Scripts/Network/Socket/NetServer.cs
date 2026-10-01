@@ -42,11 +42,22 @@ public class NetServer //shift+tab 左对齐
     }
 
     /// <summary>
-    /// 编辑器停止运行时关掉监听，否则端口会占着
+    /// 关掉监听，并断开已经连上来的客户端，对方才能立刻发现主机没了
     /// </summary>
     public void Close()
     {
         _isClose = true;
+        List<Session> sessions = new List<Session>();
+        foreach (KeyValuePair<int, Session> item in SessionMgr.Instance.GetSessionDic())
+        {
+            sessions.Add(item.Value);
+        }
+
+        for (int i = 0; i < sessions.Count; i++)
+        {
+            sessions[i].CloseWithoutNotice();
+        }
+
         if (_socket != null)
         {
             _socket.Close();

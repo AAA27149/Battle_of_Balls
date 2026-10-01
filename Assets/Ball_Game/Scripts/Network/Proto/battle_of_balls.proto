@@ -34,6 +34,11 @@ message PlayerEnterRet {
   int32 player_id = 1;
 }
 
+// 有玩家退出
+message PlayerExitRet {
+  int32 player_id = 1;
+}
+
 // 玩家输入。只带操作，不带球的位置
 message PlayerInputReq {
   int32 player_id = 1;

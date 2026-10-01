@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class Host_World : MonoBehaviour
 {
-    private const float MoveSpeed = 6.5f;
+    private const float MoveSpeed = 8f;
 
     private GameObject[] _players;
     private Rigidbody[] _playerBodies;
@@ -27,8 +27,12 @@ public class Host_World : MonoBehaviour
         //球只在主机上模拟
         _ball.isKinematic = false;
         _ball.useGravity = true;
+        _ball.mass = 0.6f;
+        _ball.linearDamping = 0.01f;
+        _ball.angularDamping = 0.02f;
         _ball.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         _ball.interpolation = RigidbodyInterpolation.Interpolate;
+        SetBallBounce(_ball);
 
         for (int i = 1; i <= 4; i++)
         {
@@ -36,6 +40,26 @@ public class Host_World : MonoBehaviour
         }
 
         StartCoroutine(SnapshotAfterPhysics());
+    }
+
+    /// <summary>
+    /// 球的弹性。默认弹性是 0，撞墙只会停住
+    /// </summary>
+    private void SetBallBounce(Rigidbody ball)
+    {
+        Collider collider = ball.GetComponent<Collider>();
+        if (collider == null)
+        {
+            return;
+        }
+
+        PhysicsMaterial material = new PhysicsMaterial("BallBounce");
+        material.bounciness = 0.9f;
+        material.dynamicFriction = 0.1f;
+        material.staticFriction = 0.1f;
+        material.bounceCombine = PhysicsMaterialCombine.Maximum;
+        material.frictionCombine = PhysicsMaterialCombine.Average;
+        collider.material = material;
     }
 
     private void FixedUpdate()

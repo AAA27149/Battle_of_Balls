@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Google.Protobuf;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /**
@@ -40,6 +41,14 @@ public class GameRoom : MonoBehaviour
     [SerializeField, Header("颜色提示")]
     private Text _txtColor;
 
+    /// <summary>
+    /// 主机断开提示，默认关掉
+    /// </summary>
+    [SerializeField, Header("主机断开提示")]
+    private GameObject _hostDownPanel;
+
+    public static GameRoom Instance;
+
     private GameObject[] _players;
     private bool _isHost;
     private PlayerInputCtrl _input;
@@ -56,6 +65,11 @@ public class GameRoom : MonoBehaviour
     private void Awake()
     {
         _players = new GameObject[] { null, _player1, _player2, _player3, _player4 };
+        Instance = this;
+        if (_hostDownPanel != null)
+        {
+            _hostDownPanel.SetActive(false);
+        }
         _playerTargetPos = new Vector3[5];
         _playerTargetYaw = new float[5];
         _input = gameObject.AddComponent<PlayerInputCtrl>();
@@ -84,6 +98,7 @@ public class GameRoom : MonoBehaviour
 
         //3. 之后再有人进来，再显示对应胶囊
         BallRoomPlayerMgr.Instance.OnPlayerEnter += ShowPlayer;
+        BallRoomPlayerMgr.Instance.OnPlayerExit += HidePlayer;
 
         HostApp hostApp = FindAnyObjectByType<HostApp>();
         _isHost = hostApp != null && hostApp.IsHost;
@@ -105,6 +120,11 @@ public class GameRoom : MonoBehaviour
     private void OnDestroy()
     {
         BallRoomPlayerMgr.Instance.OnPlayerEnter -= ShowPlayer;
+        BallRoomPlayerMgr.Instance.OnPlayerExit -= HidePlayer;
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 
     private void FixedUpdate()
@@ -263,6 +283,65 @@ public class GameRoom : MonoBehaviour
         {
             player.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// 关掉退出玩家的胶囊
+    /// </summary>
+    private void HidePlayer(int playerId)
+    {
+        GameObject player = GetPlayer(playerId);
+        if (player != null)
+        {
+            player.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 主机连接断了。加入方弹出提示
+    /// </summary>
+    public static void NotifyHostDisconnected()
+    {
+        if (Instance != null)
+        {
+            Instance.ShowHostDown();
+        }
+    }
+
+    public void ShowHostDown()
+    {
+        if (_txtColor != null)
+        {
+            _txtColor.text = "主机已断开连接";
+        }
+
+        if (_hostDownPanel != null)
+        {
+            _hostDownPanel.SetActive(true);
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if (_input != null)
+        {
+            _input.enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// 点确定，回到主界面
+    /// </summary>
+    public void OnHostDownConfirm()
+    {
+        NetSocketMgr.Instance.Disconnect();
+        BallRoomPlayerMgr.Instance.Clear();
+        HostApp hostApp = FindAnyObjectByType<HostApp>();
+        if (hostApp != null)
+        {
+            Destroy(hostApp.gameObject);
+        }
+
+        SceneManager.LoadScene(NetDefine.MainScene);
     }
 
     private GameObject GetPlayer(int playerId)

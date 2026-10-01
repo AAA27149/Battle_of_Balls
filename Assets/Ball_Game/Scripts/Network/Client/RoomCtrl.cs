@@ -16,6 +16,7 @@ public class RoomCtrl
         //在哪里需要数据的时候去监听 请求结果
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_JoinRoomCode, OnJoinRoomHandle);
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_PlayerEnterCode, OnPlayerEnterHandle);
+        SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_PlayerExitCode, OnPlayerExitHandle);
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_ErrCode, OnErrHandle);
     }
 
@@ -46,6 +47,15 @@ public class RoomCtrl
     {
         PlayerEnterRet ret = PlayerEnterRet.Parser.ParseFrom(data);
         BallRoomPlayerMgr.Instance.AddPlayer(ret.PlayerId);
+    }
+
+    /// <summary>
+    /// 其它玩家退出
+    /// </summary>
+    private void OnPlayerExitHandle(ByteString data)
+    {
+        PlayerExitRet ret = PlayerExitRet.Parser.ParseFrom(data);
+        BallRoomPlayerMgr.Instance.RemovePlayer(ret.PlayerId);
     }
 
     /// <summary>
