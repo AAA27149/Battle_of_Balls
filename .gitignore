@@ -112,5 +112,8 @@ x86/
 # Local History for Visual Studio Code
 .history/
 
+# Rider / IntelliJ
+.idea/
+
 # Built Visual Studio Code Extensions
 *.vsix

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+// 外层包，字段和 MMO 的 BasePackage 一致
+message BasePackage {
+  int32 proto_code = 1;
+  int32 unity_session_id = 2;
+  int32 gate_session_id = 3;
+  bytes data = 10;
+}
+
+// 错误码。登录那一套这里用不到，只留主机回包会用到的
+enum CmdCode {
+  Succed = 0;
+  ServerError = 2;
+  RoomFull = 16;
+}
+
+message ErrMsg {
+  CmdCode cmd_code = 1;
+}
