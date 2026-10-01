@@ -28,4 +28,16 @@ public class Host_WorldBC : Singleton<Host_WorldBC>
             item.Value.SendData(NetDefine.CMD_PlayerEnterCode, ret.ToByteString());
         }
     }
+
+    /// <summary>
+    /// 把这一拍的人和球发给所有客户端
+    /// </summary>
+    public void SnapshotBC(WorldSnapshot snapshot)
+    {
+        Dictionary<int, Session> sessionDic = SessionMgr.Instance.GetSessionDic();
+        foreach (var item in sessionDic)
+        {
+            item.Value.SendData(NetDefine.CMD_WorldSnapshotCode, snapshot.ToByteString());
+        }
+    }
 }

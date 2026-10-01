@@ -23,12 +23,52 @@ message ErrMsg {
 message JoinRoomReq {
 }
 
-// 加入房间返回，带回分配到的玩家编号
+// 加入房间返回。player_id 是自己的编号，player_ids 是房间里已有的全部编号
 message JoinRoomRet {
   int32 player_id = 1;
+  repeated int32 player_ids = 2;
 }
 
 // 有玩家进入，广播给房间里其它人
 message PlayerEnterRet {
   int32 player_id = 1;
+}
+
+// 玩家输入。只带操作，不带球的位置
+message PlayerInputReq {
+  int32 player_id = 1;
+  float move_x = 2;
+  float move_z = 3;
+  float yaw = 4;
+}
+
+message PlayerState {
+  int32 player_id = 1;
+  float pos_x = 2;
+  float pos_y = 3;
+  float pos_z = 4;
+  float yaw = 5;
+}
+
+message BallState {
+  float pos_x = 1;
+  float pos_y = 2;
+  float pos_z = 3;
+  float vel_x = 4;
+  float vel_y = 5;
+  float vel_z = 6;
+  float ang_vel_x = 7;
+  float ang_vel_y = 8;
+  float ang_vel_z = 9;
+  float rot_x = 10;
+  float rot_y = 11;
+  float rot_z = 12;
+  float rot_w = 13;
+}
+
+// 主机这一拍算完的人和球
+message WorldSnapshot {
+  int32 tick = 1;
+  BallState ball = 2;
+  repeated PlayerState players = 3;
 }

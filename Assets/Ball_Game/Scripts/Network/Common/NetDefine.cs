@@ -17,6 +17,8 @@ public class NetDefine
     public const ushort CMD_PlayerEnterCode = 12040; //有玩家进入返回码
 
     public const ushort CMD_PlayerExitCode = 12050; //有玩家离开返回码
+
+    public const string GameScene = "GameScene"; //进房成功后加载的场景
 }
 
 /// <summary>

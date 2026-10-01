@@ -1,5 +1,6 @@
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /**
@@ -18,6 +19,7 @@ public class RoomEntry : MonoBehaviour
     private HostApp _hostApp;
     private SynchronizationContext _syncContext;
     private RoomCtrl _roomCtrl;
+    private bool _entered;
 
     private void Awake()
     {
@@ -34,7 +36,9 @@ public class RoomEntry : MonoBehaviour
     public void OnCreateRoomBtnClick()
     {
         _hostApp.StartHost();
-        SetStatus("已创建房间，等待其它客户端加入  " + NetDefine.IPHost + ":" + NetDefine.RoomPort);
+        //主机是 1 号红色，马上进入游戏场景
+        BallRoomPlayerMgr.Instance.SetLocalHost();
+        EnterGame();
     }
 
     /// <summary>
@@ -67,6 +71,24 @@ public class RoomEntry : MonoBehaviour
 
     public void SetStatus(string text)
     {
-        _txtStatus.text = text;
+        if (_txtStatus != null)
+        {
+            _txtStatus.text = text;
+        }
+    }
+
+    /// <summary>
+    /// 进入游戏场景。网络物体留下来，否则主机端口会断
+    /// </summary>
+    public void EnterGame()
+    {
+        if (_entered)
+        {
+            return;
+        }
+
+        _entered = true;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene(NetDefine.GameScene);
     }
 }

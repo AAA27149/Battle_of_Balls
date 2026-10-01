@@ -159,8 +159,9 @@ public class ServerBase
                             //拿到数据反序列化数据
                             BasePackage basePackage= BasePackage.Parser.ParseFrom(data); //数据的解包
                             //Console.WriteLine("basePackage::"+ basePackage.ToString());
-                            //输入包每帧都有，不打印，避免刷屏
-                            if (basePackage.ProtoCode != NetDefine.CMD_PlayerInputCode)
+                            //输入和快照每帧都有，不打印，避免刷屏
+                            if (basePackage.ProtoCode != NetDefine.CMD_PlayerInputCode &&
+                                basePackage.ProtoCode != NetDefine.CMD_WorldSnapshotCode)
                             {
                                 LogMsg.Info($"{_socket.LocalEndPoint} 接收  basePackage::{basePackage.ToString()} <= {_socket.RemoteEndPoint}");
                                 

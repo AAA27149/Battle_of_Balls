@@ -34,7 +34,9 @@ public class RoomCtrl
     private void OnJoinRoomHandle(ByteString data)
     {
         JoinRoomRet ret = JoinRoomRet.Parser.ParseFrom(data);
-        _view.SetStatus("进入房间，玩家编号 " + ret.PlayerId);
+        //记下自己和已经在房间里的人，再进入游戏场景
+        BallRoomPlayerMgr.Instance.SetPlayers(ret.PlayerId, ret.PlayerIds);
+        _view.EnterGame();
     }
 
     /// <summary>
@@ -43,7 +45,7 @@ public class RoomCtrl
     private void OnPlayerEnterHandle(ByteString data)
     {
         PlayerEnterRet ret = PlayerEnterRet.Parser.ParseFrom(data);
-        _view.SetStatus("玩家 " + ret.PlayerId + " 进入房间");
+        BallRoomPlayerMgr.Instance.AddPlayer(ret.PlayerId);
     }
 
     /// <summary>

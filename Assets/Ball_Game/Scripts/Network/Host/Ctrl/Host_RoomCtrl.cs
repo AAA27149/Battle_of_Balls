@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Google.Protobuf;
 
 /**
@@ -52,15 +53,21 @@ public class Host_RoomCtrl : IContainer
             return;
         }
 
-        //2. 分配玩家编号
+        //2. 分配玩家编号，并记到房间名单里
         _playerId++;
         Session session = (Session)serverBase;
         session._roleId = _playerId;
+        BallRoomPlayerMgr.Instance.AddPlayer(_playerId);
 
         JoinRoomRet ret = new JoinRoomRet()
         {
             PlayerId = _playerId,
         };
+        List<int> playerIds = BallRoomPlayerMgr.Instance.PlayerIds;
+        for (int i = 0; i < playerIds.Count; i++)
+        {
+            ret.PlayerIds.Add(playerIds[i]);
+        }
         serverBase.SendData(basePackage, NetDefine.CMD_JoinRoomCode, ret.ToByteString());
 
         //3. 把这个玩家同步给房间里其它客户端
@@ -76,5 +83,7 @@ public class Host_RoomCtrl : IContainer
     /// </summary>
     private void OnPlayerInputHandle(ServerBase serverBase, BasePackage basePackage)
     {
+        PlayerInputReq req = PlayerInputReq.Parser.ParseFrom(basePackage.Data);
+        Host_InputBuf.Instance.Set(req.PlayerId, req.MoveX, req.MoveZ, req.Yaw);
     }
 }
