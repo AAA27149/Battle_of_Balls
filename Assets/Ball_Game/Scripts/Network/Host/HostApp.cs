@@ -9,12 +9,24 @@ public class HostApp : MonoBehaviour
 {
     private NetServer _server;
 
-    private void Start()
+    public bool IsHost
     {
+        get { return _server != null; }
+    }
+
+    /// <summary>
+    /// 点创建房间后再听端口。没有中心服可连，所以这里不传 NetClient
+    /// </summary>
+    public void StartHost()
+    {
+        if (_server != null)
+        {
+            return;
+        }
+
         Host_RoomCtrl roomCtrl = new Host_RoomCtrl();
         roomCtrl.OnInit();
 
-        //作为服务端。没有中心服可连，所以这里不传 NetClient
         _server = new NetServer(null);
         _server.StartServer(NetDefine.IPHost, NetDefine.RoomPort);
 

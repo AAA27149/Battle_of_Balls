@@ -29,7 +29,7 @@ public class NetServer //shift+tab 左对齐
         switch (port)
         {
             case NetDefine.RoomPort:
-                Console.WriteLine("房间主机开启成功: "+ endPoint.ToString());
+                LogMsg.Info("房间主机开启成功: " + endPoint.ToString());
                 break;
         }
         
