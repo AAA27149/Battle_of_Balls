@@ -39,6 +39,11 @@ message PlayerExitRet {
   int32 player_id = 1;
 }
 
+// 碰到球，只发给碰到的那个玩家
+message TappedRet {
+  int32 player_id = 1;
+}
+
 // 玩家输入。只带操作，不带球的位置
 message PlayerInputReq {
   int32 player_id = 1;
@@ -69,6 +74,7 @@ message BallState {
   float rot_y = 11;
   float rot_z = 12;
   float rot_w = 13;
+  int32 ball_id = 14;
 }
 
 // 主机这一拍算完的人和球
@@ -76,4 +82,5 @@ message WorldSnapshot {
   int32 tick = 1;
   BallState ball = 2;
   repeated PlayerState players = 3;
+  repeated BallState balls = 4;
 }

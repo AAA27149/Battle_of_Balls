@@ -70,6 +70,8 @@ public class NetSocketMgr : Singleton<NetSocketMgr>
         if (_client != null)
         {
             _client._isNeedReconn = false;
+            //主动断开不要走连接失败回调，避免误弹「主机不存在」
+            _client.OnConnFailed = null;
             _client.Disconnect();
             _client = null;
         }

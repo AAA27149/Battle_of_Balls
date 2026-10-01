@@ -28,19 +28,21 @@ public static partial class BattleOfBallsReflection {
           "CghjbWRfY29kZRgBIAEoDjIILkNtZENvZGUiDQoLSm9pblJvb21SZXEiNAoL",
           "Sm9pblJvb21SZXQSEQoJcGxheWVyX2lkGAEgASgFEhIKCnBsYXllcl9pZHMY",
           "AiADKAUiIwoOUGxheWVyRW50ZXJSZXQSEQoJcGxheWVyX2lkGAEgASgFIiIK",
-          "DVBsYXllckV4aXRSZXQSEQoJcGxheWVyX2lkGAEgASgFIlAKDlBsYXllcklu",
-          "cHV0UmVxEhEKCXBsYXllcl9pZBgBIAEoBRIOCgZtb3ZlX3gYAiABKAISDgoG",
-          "bW92ZV96GAMgASgCEgsKA3lhdxgEIAEoAiJaCgtQbGF5ZXJTdGF0ZRIRCglw",
-          "bGF5ZXJfaWQYASABKAUSDQoFcG9zX3gYAiABKAISDQoFcG9zX3kYAyABKAIS",
-          "DQoFcG9zX3oYBCABKAISCwoDeWF3GAUgASgCItoBCglCYWxsU3RhdGUSDQoF",
-          "cG9zX3gYASABKAISDQoFcG9zX3kYAiABKAISDQoFcG9zX3oYAyABKAISDQoF",
-          "dmVsX3gYBCABKAISDQoFdmVsX3kYBSABKAISDQoFdmVsX3oYBiABKAISEQoJ",
-          "YW5nX3ZlbF94GAcgASgCEhEKCWFuZ192ZWxfeRgIIAEoAhIRCglhbmdfdmVs",
-          "X3oYCSABKAISDQoFcm90X3gYCiABKAISDQoFcm90X3kYCyABKAISDQoFcm90",
-          "X3oYDCABKAISDQoFcm90X3cYDSABKAIiVgoNV29ybGRTbmFwc2hvdBIMCgR0",
-          "aWNrGAEgASgFEhgKBGJhbGwYAiABKAsyCi5CYWxsU3RhdGUSHQoHcGxheWVy",
-          "cxgDIAMoCzIMLlBsYXllclN0YXRlKjQKB0NtZENvZGUSCgoGU3VjY2VkEAAS",
-          "DwoLU2VydmVyRXJyb3IQAhIMCghSb29tRnVsbBAQYgZwcm90bzM="));
+          "DVBsYXllckV4aXRSZXQSEQoJcGxheWVyX2lkGAEgASgFIh4KCVRhcHBlZFJl",
+          "dBIRCglwbGF5ZXJfaWQYASABKAUiUAoOUGxheWVySW5wdXRSZXESEQoJcGxh",
+          "eWVyX2lkGAEgASgFEg4KBm1vdmVfeBgCIAEoAhIOCgZtb3ZlX3oYAyABKAIS",
+          "CwoDeWF3GAQgASgCIloKC1BsYXllclN0YXRlEhEKCXBsYXllcl9pZBgBIAEo",
+          "BRINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3NfehgEIAEo",
+          "AhILCgN5YXcYBSABKAIi6wEKCUJhbGxTdGF0ZRINCgVwb3NfeBgBIAEoAhIN",
+          "CgVwb3NfeRgCIAEoAhINCgVwb3NfehgDIAEoAhINCgV2ZWxfeBgEIAEoAhIN",
+          "CgV2ZWxfeRgFIAEoAhINCgV2ZWxfehgGIAEoAhIRCglhbmdfdmVsX3gYByAB",
+          "KAISEQoJYW5nX3ZlbF95GAggASgCEhEKCWFuZ192ZWxfehgJIAEoAhINCgVy",
+          "b3RfeBgKIAEoAhINCgVyb3RfeRgLIAEoAhINCgVyb3RfehgMIAEoAhINCgVy",
+          "b3RfdxgNIAEoAhIPCgdiYWxsX2lkGA4gASgFInEKDVdvcmxkU25hcHNob3QS",
+          "DAoEdGljaxgBIAEoBRIYCgRiYWxsGAIgASgLMgouQmFsbFN0YXRlEh0KB3Bs",
+          "YXllcnMYAyADKAsyDC5QbGF5ZXJTdGF0ZRIZCgViYWxscxgEIAMoCzIKLkJh",
+          "bGxTdGF0ZSo0CgdDbWRDb2RlEgoKBlN1Y2NlZBAAEg8KC1NlcnZlckVycm9y",
+          "EAISDAoIUm9vbUZ1bGwQEGIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CmdCode), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -50,10 +52,11 @@ public static partial class BattleOfBallsReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::JoinRoomRet), global::JoinRoomRet.Parser, new[]{ "PlayerId", "PlayerIds" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerEnterRet), global::PlayerEnterRet.Parser, new[]{ "PlayerId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerExitRet), global::PlayerExitRet.Parser, new[]{ "PlayerId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::TappedRet), global::TappedRet.Parser, new[]{ "PlayerId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInputReq), global::PlayerInputReq.Parser, new[]{ "PlayerId", "MoveX", "MoveZ", "Yaw" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerState), global::PlayerState.Parser, new[]{ "PlayerId", "PosX", "PosY", "PosZ", "Yaw" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::BallState), global::BallState.Parser, new[]{ "PosX", "PosY", "PosZ", "VelX", "VelY", "VelZ", "AngVelX", "AngVelY", "AngVelZ", "RotX", "RotY", "RotZ", "RotW" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::WorldSnapshot), global::WorldSnapshot.Parser, new[]{ "Tick", "Ball", "Players" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::BallState), global::BallState.Parser, new[]{ "PosX", "PosY", "PosZ", "VelX", "VelY", "VelZ", "AngVelX", "AngVelY", "AngVelZ", "RotX", "RotY", "RotZ", "RotW", "BallId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::WorldSnapshot), global::WorldSnapshot.Parser, new[]{ "Tick", "Ball", "Players", "Balls" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1378,6 +1381,207 @@ public sealed partial class PlayerExitRet : pb::IMessage<PlayerExitRet>
 }
 
 /// <summary>
+/// 碰到球，只发给碰到的那个玩家
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class TappedRet : pb::IMessage<TappedRet>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<TappedRet> _parser = new pb::MessageParser<TappedRet>(() => new TappedRet());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<TappedRet> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[6]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public TappedRet() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public TappedRet(TappedRet other) : this() {
+    playerId_ = other.playerId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public TappedRet Clone() {
+    return new TappedRet(this);
+  }
+
+  /// <summary>Field number for the "player_id" field.</summary>
+  public const int PlayerIdFieldNumber = 1;
+  private int playerId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int PlayerId {
+    get { return playerId_; }
+    set {
+      playerId_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as TappedRet);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(TappedRet other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (PlayerId != other.PlayerId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (PlayerId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(PlayerId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (PlayerId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(PlayerId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (PlayerId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(TappedRet other) {
+    if (other == null) {
+      return;
+    }
+    if (other.PlayerId != 0) {
+      PlayerId = other.PlayerId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          PlayerId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          PlayerId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 /// 玩家输入。只带操作，不带球的位置
 /// </summary>
 [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
@@ -1395,7 +1599,7 @@ public sealed partial class PlayerInputReq : pb::IMessage<PlayerInputReq>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[6]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1704,7 +1908,7 @@ public sealed partial class PlayerState : pb::IMessage<PlayerState>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[7]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2050,7 +2254,7 @@ public sealed partial class BallState : pb::IMessage<BallState>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[8]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2083,6 +2287,7 @@ public sealed partial class BallState : pb::IMessage<BallState>
     rotY_ = other.rotY_;
     rotZ_ = other.rotZ_;
     rotW_ = other.rotW_;
+    ballId_ = other.ballId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2248,6 +2453,18 @@ public sealed partial class BallState : pb::IMessage<BallState>
     }
   }
 
+  /// <summary>Field number for the "ball_id" field.</summary>
+  public const int BallIdFieldNumber = 14;
+  private int ballId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int BallId {
+    get { return ballId_; }
+    set {
+      ballId_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -2276,6 +2493,7 @@ public sealed partial class BallState : pb::IMessage<BallState>
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotY, other.RotY)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotZ, other.RotZ)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotW, other.RotW)) return false;
+    if (BallId != other.BallId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2296,6 +2514,7 @@ public sealed partial class BallState : pb::IMessage<BallState>
     if (RotY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotY);
     if (RotZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotZ);
     if (RotW != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotW);
+    if (BallId != 0) hash ^= BallId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2366,6 +2585,10 @@ public sealed partial class BallState : pb::IMessage<BallState>
       output.WriteRawTag(109);
       output.WriteFloat(RotW);
     }
+    if (BallId != 0) {
+      output.WriteRawTag(112);
+      output.WriteInt32(BallId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2428,6 +2651,10 @@ public sealed partial class BallState : pb::IMessage<BallState>
       output.WriteRawTag(109);
       output.WriteFloat(RotW);
     }
+    if (BallId != 0) {
+      output.WriteRawTag(112);
+      output.WriteInt32(BallId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -2476,6 +2703,9 @@ public sealed partial class BallState : pb::IMessage<BallState>
     }
     if (RotW != 0F) {
       size += 1 + 4;
+    }
+    if (BallId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(BallId);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2528,6 +2758,9 @@ public sealed partial class BallState : pb::IMessage<BallState>
     if (other.RotW != 0F) {
       RotW = other.RotW;
     }
+    if (other.BallId != 0) {
+      BallId = other.BallId;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -2597,6 +2830,10 @@ public sealed partial class BallState : pb::IMessage<BallState>
         }
         case 109: {
           RotW = input.ReadFloat();
+          break;
+        }
+        case 112: {
+          BallId = input.ReadInt32();
           break;
         }
       }
@@ -2670,6 +2907,10 @@ public sealed partial class BallState : pb::IMessage<BallState>
           RotW = input.ReadFloat();
           break;
         }
+        case 112: {
+          BallId = input.ReadInt32();
+          break;
+        }
       }
     }
   }
@@ -2695,7 +2936,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[9]; }
+    get { return global::BattleOfBallsReflection.Descriptor.MessageTypes[10]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2718,6 +2959,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
     tick_ = other.tick_;
     ball_ = other.ball_ != null ? other.ball_.Clone() : null;
     players_ = other.players_.Clone();
+    balls_ = other.balls_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2762,6 +3004,17 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
     get { return players_; }
   }
 
+  /// <summary>Field number for the "balls" field.</summary>
+  public const int BallsFieldNumber = 4;
+  private static readonly pb::FieldCodec<global::BallState> _repeated_balls_codec
+      = pb::FieldCodec.ForMessage(34, global::BallState.Parser);
+  private readonly pbc::RepeatedField<global::BallState> balls_ = new pbc::RepeatedField<global::BallState>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::BallState> Balls {
+    get { return balls_; }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -2780,6 +3033,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
     if (Tick != other.Tick) return false;
     if (!object.Equals(Ball, other.Ball)) return false;
     if(!players_.Equals(other.players_)) return false;
+    if(!balls_.Equals(other.balls_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2790,6 +3044,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
     if (Tick != 0) hash ^= Tick.GetHashCode();
     if (ball_ != null) hash ^= Ball.GetHashCode();
     hash ^= players_.GetHashCode();
+    hash ^= balls_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2817,6 +3072,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
       output.WriteMessage(Ball);
     }
     players_.WriteTo(output, _repeated_players_codec);
+    balls_.WriteTo(output, _repeated_balls_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2836,6 +3092,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
       output.WriteMessage(Ball);
     }
     players_.WriteTo(ref output, _repeated_players_codec);
+    balls_.WriteTo(ref output, _repeated_balls_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -2853,6 +3110,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ball);
     }
     size += players_.CalculateSize(_repeated_players_codec);
+    size += balls_.CalculateSize(_repeated_balls_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -2875,6 +3133,7 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
       Ball.MergeFrom(other.Ball);
     }
     players_.Add(other.players_);
+    balls_.Add(other.balls_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -2909,6 +3168,10 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
           players_.AddEntriesFrom(input, _repeated_players_codec);
           break;
         }
+        case 34: {
+          balls_.AddEntriesFrom(input, _repeated_balls_codec);
+          break;
+        }
       }
     }
   #endif
@@ -2941,6 +3204,10 @@ public sealed partial class WorldSnapshot : pb::IMessage<WorldSnapshot>
         }
         case 26: {
           players_.AddEntriesFrom(ref input, _repeated_players_codec);
+          break;
+        }
+        case 34: {
+          balls_.AddEntriesFrom(ref input, _repeated_balls_codec);
           break;
         }
       }

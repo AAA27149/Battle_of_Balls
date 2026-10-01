@@ -73,12 +73,7 @@ public class NetClient : ServerBase
             _socket.EndConnect(ar);
             _connState=ConnState.Connected;
             OnConnSucceed?.Invoke();
-            switch (_port)
-            {
-                case NetDefine.RoomPort:
-                    LogMsg.Info($"连接房间主机成功:{_socket.RemoteEndPoint}");
-                    break;
-            }
+            LogMsg.Info($"连接房间主机成功:{_socket.RemoteEndPoint}");
            
            
             

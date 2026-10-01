@@ -55,8 +55,9 @@ public class GameRoom : MonoBehaviour
     private Rigidbody _ball;
     private Camera _camera;
     private bool _hasNet;
-    private Vector3 _ballTargetPos;
-    private Quaternion _ballTargetRot;
+    private Dictionary<int, BallView> _ballViews = new Dictionary<int, BallView>();
+    private string _colorText;
+    private float _tappedUntil;
     private Vector3[] _playerTargetPos;
     private float[] _playerTargetYaw;
     private const float PositionLerpSpeed = 12f;
@@ -75,6 +76,12 @@ public class GameRoom : MonoBehaviour
         _input = gameObject.AddComponent<PlayerInputCtrl>();
         _camera = Camera.main;
         _ball = GameObject.Find("Ball").GetComponent<Rigidbody>();
+        BallView firstBall = new BallView();
+        firstBall.Transform = _ball.transform;
+        firstBall.TargetPos = _ball.transform.position;
+        firstBall.TargetRot = _ball.transform.rotation;
+        firstBall.Placed = true;
+        _ballViews[1] = firstBall;
 
         HideAll();
 
@@ -95,6 +102,7 @@ public class GameRoom : MonoBehaviour
         {
             _txtColor.text = "你是" + selfId + "号" + BallRoomPlayerMgr.ColorName(selfId) + "玩家";
         }
+        _colorText = _txtColor.text;
 
         //3. 之后再有人进来，再显示对应胶囊
         BallRoomPlayerMgr.Instance.OnPlayerEnter += ShowPlayer;
@@ -147,6 +155,15 @@ public class GameRoom : MonoBehaviour
 
     private void Update()
     {
+        if (_tappedUntil > 0f && Time.time >= _tappedUntil)
+        {
+            _tappedUntil = 0f;
+            if (_txtColor != null)
+            {
+                _txtColor.text = _colorText;
+            }
+        }
+
         if (_isHost)
         {
             return;
@@ -166,15 +183,16 @@ public class GameRoom : MonoBehaviour
     private void OnSnapshot(ByteString data)
     {
         WorldSnapshot snapshot = WorldSnapshot.Parser.ParseFrom(data);
-        if (snapshot.Ball != null)
+        if (snapshot.Balls.Count > 0)
         {
-            _ballTargetPos = new Vector3(snapshot.Ball.PosX, snapshot.Ball.PosY, snapshot.Ball.PosZ);
-            _ballTargetRot = new Quaternion(snapshot.Ball.RotX, snapshot.Ball.RotY, snapshot.Ball.RotZ, snapshot.Ball.RotW);
-            if (!_hasNet)
+            for (int i = 0; i < snapshot.Balls.Count; i++)
             {
-                _ball.transform.position = _ballTargetPos;
-                _ball.transform.rotation = _ballTargetRot;
+                SetBallTarget(snapshot.Balls[i]);
             }
+        }
+        else if (snapshot.Ball != null)
+        {
+            SetBallTarget(snapshot.Ball);
         }
 
         for (int i = 0; i < snapshot.Players.Count; i++)
@@ -206,19 +224,28 @@ public class GameRoom : MonoBehaviour
     /// </summary>
     private void FollowSnapshot()
     {
-        if (!_hasNet || _ball == null)
+        if (!_hasNet || _ballViews.Count == 0)
         {
             return;
         }
 
-        _ball.transform.position = Vector3.Lerp(
-            _ball.transform.position,
-            _ballTargetPos,
-            PositionLerpSpeed * Time.deltaTime);
-        _ball.transform.rotation = Quaternion.Slerp(
-            _ball.transform.rotation,
-            _ballTargetRot,
-            RotationLerpSpeed * Time.deltaTime);
+        foreach (KeyValuePair<int, BallView> item in _ballViews)
+        {
+            BallView view = item.Value;
+            if (view.Transform == null)
+            {
+                continue;
+            }
+
+            view.Transform.position = Vector3.Lerp(
+                view.Transform.position,
+                view.TargetPos,
+                PositionLerpSpeed * Time.deltaTime);
+            view.Transform.rotation = Quaternion.Slerp(
+                view.Transform.rotation,
+                view.TargetRot,
+                RotationLerpSpeed * Time.deltaTime);
+        }
 
         List<int> playerIds = BallRoomPlayerMgr.Instance.PlayerIds;
         for (int i = 0; i < playerIds.Count; i++)
@@ -239,6 +266,74 @@ public class GameRoom : MonoBehaviour
                 Quaternion.Euler(0f, _playerTargetYaw[playerId], 0f),
                 RotationLerpSpeed * Time.deltaTime);
         }
+    }
+
+    /// <summary>
+    /// 界面显示 Tapped，大约 1 秒后恢复颜色提示
+    /// </summary>
+    public void ShowTapped()
+    {
+        if (_txtColor != null)
+        {
+            _txtColor.text = "Tapped";
+        }
+
+        _tappedUntil = Time.time + 1f;
+    }
+
+    private void SetBallTarget(BallState state)
+    {
+        int ballId = state.BallId <= 0 ? 1 : state.BallId;
+        BallView view = GetOrCreateBall(ballId);
+        view.TargetPos = new Vector3(state.PosX, state.PosY, state.PosZ);
+        view.TargetRot = new Quaternion(state.RotX, state.RotY, state.RotZ, state.RotW);
+        //新球第一次出现就放在主机给的位置，不要从房间中心滑过去
+        if (!view.Placed && view.Transform != null)
+        {
+            view.Transform.position = view.TargetPos;
+            view.Transform.rotation = view.TargetRot;
+            view.Placed = true;
+        }
+    }
+
+    private BallView GetOrCreateBall(int ballId)
+    {
+        BallView view;
+        if (_ballViews.TryGetValue(ballId, out view))
+        {
+            return view;
+        }
+
+        GameObject ballObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        ballObject.name = "Ball_" + ballId;
+        if (_ball != null)
+        {
+            ballObject.transform.localScale = _ball.transform.localScale;
+            Renderer sourceRenderer = _ball.GetComponent<Renderer>();
+            Renderer ballRenderer = ballObject.GetComponent<Renderer>();
+            if (sourceRenderer != null && ballRenderer != null)
+            {
+                ballRenderer.sharedMaterial = sourceRenderer.sharedMaterial;
+            }
+        }
+
+        Rigidbody body = ballObject.AddComponent<Rigidbody>();
+        body.isKinematic = true;
+        body.useGravity = false;
+        view = new BallView();
+        view.Transform = ballObject.transform;
+        view.TargetPos = ballObject.transform.position;
+        view.TargetRot = ballObject.transform.rotation;
+        _ballViews[ballId] = view;
+        return view;
+    }
+
+    private class BallView
+    {
+        public Transform Transform;
+        public Vector3 TargetPos;
+        public Quaternion TargetRot;
+        public bool Placed;
     }
 
     /// <summary>

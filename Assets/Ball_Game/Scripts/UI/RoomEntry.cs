@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,24 @@ public class RoomEntry : MonoBehaviour
     [SerializeField, Header("状态文本")]
     private Text _txtStatus;
 
+    /// <summary>
+    /// 主机地址
+    /// </summary>
+    [SerializeField, Header("IP输入框")]
+    private InputField _iptIp;
+
+    /// <summary>
+    /// 主机端口
+    /// </summary>
+    [SerializeField, Header("端口输入框")]
+    private InputField _iptPort;
+
+    /// <summary>
+    /// 主机不存在提示，默认关掉
+    /// </summary>
+    [SerializeField, Header("主机不存在提示")]
+    private GameObject _hostMissingPanel;
+
     private HostApp _hostApp;
     private SynchronizationContext _syncContext;
     private RoomCtrl _roomCtrl;
@@ -28,6 +47,10 @@ public class RoomEntry : MonoBehaviour
         _roomCtrl = new RoomCtrl(this);
         NetSocketMgr.Instance.Init();
         _hostApp = GetComponent<HostApp>();
+        if (_hostMissingPanel != null)
+        {
+            _hostMissingPanel.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -35,7 +58,19 @@ public class RoomEntry : MonoBehaviour
     /// </summary>
     public void OnCreateRoomBtnClick()
     {
-        _hostApp.StartHost();
+        string ip;
+        int port;
+        if (!TryReadAddress(out ip, out port))
+        {
+            return;
+        }
+
+        if (!_hostApp.StartHost(ip, port))
+        {
+            SetStatus("创建房间失败，请检查地址和端口是否可用");
+            return;
+        }
+
         //主机是 1 号红色，马上进入游戏场景
         BallRoomPlayerMgr.Instance.SetLocalHost();
         EnterGame();
@@ -53,9 +88,39 @@ public class RoomEntry : MonoBehaviour
             return;
         }
 
-        //2. 连接房间主机
-        SetStatus("正在连接 " + NetDefine.IPHost + ":" + NetDefine.RoomPort);
-        NetSocketMgr.Instance.ConnectServer(NetDefine.IPHost, NetDefine.RoomPort, OnConnSucceed, OnConnFailed);
+        //2. 按输入的地址和端口连接房间主机
+        string ip;
+        int port;
+        if (!TryReadAddress(out ip, out port))
+        {
+            return;
+        }
+
+        SetStatus("正在连接 " + ip + ":" + port);
+        NetSocketMgr.Instance.ConnectServer(ip, port, OnConnSucceed, OnConnFailed);
+    }
+
+    /// <summary>
+    /// 读取界面上的地址和端口。不合法就提示，不继续
+    /// </summary>
+    private bool TryReadAddress(out string ip, out int port)
+    {
+        ip = _iptIp != null ? _iptIp.text.Trim() : NetDefine.IPHost;
+        string portText = _iptPort != null ? _iptPort.text.Trim() : NetDefine.RoomPort.ToString();
+        port = 0;
+        if (ip.Length == 0 || !IPAddress.TryParse(ip, out _))
+        {
+            SetStatus("IP地址不正确");
+            return false;
+        }
+
+        if (!int.TryParse(portText, out port) || port < 1 || port > 65535)
+        {
+            SetStatus("端口不正确");
+            return false;
+        }
+
+        return true;
     }
 
     private void OnConnSucceed()
@@ -68,7 +133,7 @@ public class RoomEntry : MonoBehaviour
     {
         //已经在游戏里的加入方，连上的主机突然断了
         bool hostDown = _entered && _hostApp != null && !_hostApp.IsHost;
-        if (hostDown && NetSocketMgr.Client != null)
+        if (NetSocketMgr.Client != null)
         {
             NetSocketMgr.Client._isNeedReconn = false;
         }
@@ -81,8 +146,23 @@ public class RoomEntry : MonoBehaviour
                 return;
             }
 
-            SetStatus("连接房间主机失败");
+            SetStatus("主机不存在");
+            if (_hostMissingPanel != null)
+            {
+                _hostMissingPanel.SetActive(true);
+            }
         }, null);
+    }
+
+    /// <summary>
+    /// 关掉主机不存在提示
+    /// </summary>
+    public void OnHostMissingConfirm()
+    {
+        if (_hostMissingPanel != null)
+        {
+            _hostMissingPanel.SetActive(false);
+        }
     }
 
     public void SetStatus(string text)

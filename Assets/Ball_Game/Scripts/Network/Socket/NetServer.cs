@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 
 public class NetServer //shift+tab 左对齐
 {
@@ -26,19 +25,12 @@ public class NetServer //shift+tab 左对齐
         _socket.Bind(endPoint);
         
         //以上就是把服务端开起来了。这里没有中心服、登录服、网关，只有房间主机
-        switch (port)
-        {
-            case NetDefine.RoomPort:
-                LogMsg.Info("房间主机开启成功: " + endPoint.ToString());
-                break;
-        }
+        LogMsg.Info("房间主机开启成功: " + endPoint.ToString());
         
         //设置最大的Socket最大连接数，这些应该在配置文件里配置
         _socket.Listen(100);  //使这个socket 为 监听套接字
-
-        Thread listenThread = new Thread(ListenConnectSocket);
-        listenThread.IsBackground = true; //意思是：把这个线程设为【后台线程】—— 主线程（程序）一关，它立刻自动死掉。程序退出时，它会被强制终止
-        listenThread.Start();
+        //先挂上接收，再返回。避免客户端在这一瞬间连接被拒绝
+        ListenConnectSocket();
     }
 
     /// <summary>

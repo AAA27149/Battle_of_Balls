@@ -17,22 +17,33 @@ public class HostApp : MonoBehaviour
     /// <summary>
     /// 点创建房间后再听端口。没有中心服可连，所以这里不传 NetClient
     /// </summary>
-    public void StartHost()
+    public bool StartHost(string ip, int port)
     {
         if (_server != null)
         {
-            return;
+            return true;
         }
 
         Host_RoomCtrl roomCtrl = new Host_RoomCtrl();
         roomCtrl.OnInit();
 
-        _server = new NetServer(null);
-        _server.StartServer(NetDefine.IPHost, NetDefine.RoomPort);
+        NetServer server = new NetServer(null);
+        try
+        {
+            server.StartServer(ip, port);
+        }
+        catch (System.Exception exception)
+        {
+            LogMsg.Info(exception.Message);
+            server.Close();
+            return false;
+        }
 
+        _server = server;
         //注册了指令集才能正常接收消息
         _server.RegistCommand(NetDefine.CMD_JoinRoomCode, roomCtrl);
         _server.RegistCommand(NetDefine.CMD_PlayerInputCode, roomCtrl);
+        return true;
     }
 
     private void OnDestroy()

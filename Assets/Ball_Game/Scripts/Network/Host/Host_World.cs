@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf;
 using UnityEngine;
 
 /**
@@ -10,33 +11,59 @@ using UnityEngine;
 public class Host_World : MonoBehaviour
 {
     private const float MoveSpeed = 8f;
+    private const float SpawnInterval = 15f;
 
     private GameObject[] _players;
     private Rigidbody[] _playerBodies;
-    private Rigidbody _ball;
+    private List<Rigidbody> _balls = new List<Rigidbody>();
     private PlayerInputCtrl _input;
     private int _tick;
+    private int _nextBallId = 2;
+    private float _spawnTimer;
+    private PhysicsMaterial _bounceMaterial;
 
     public void Init(GameObject player1, GameObject player2, GameObject player3, GameObject player4, Rigidbody ball, PlayerInputCtrl input)
     {
         _players = new GameObject[] { null, player1, player2, player3, player4 };
         _playerBodies = new Rigidbody[5];
-        _ball = ball;
         _input = input;
+        _balls.Add(ball);
+
+        //原来的那颗球，编号 1
+        BallMark firstMark = ball.gameObject.GetComponent<BallMark>();
+        if (firstMark == null)
+        {
+            firstMark = ball.gameObject.AddComponent<BallMark>();
+        }
+        firstMark.BallId = 1;
+        if (ball.gameObject.GetComponent<BallTouch>() == null)
+        {
+            ball.gameObject.AddComponent<BallTouch>();
+        }
 
         //球只在主机上模拟
-        _ball.isKinematic = false;
-        _ball.useGravity = true;
-        _ball.mass = 0.6f;
-        _ball.linearDamping = 0.01f;
-        _ball.angularDamping = 0.02f;
-        _ball.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        _ball.interpolation = RigidbodyInterpolation.Interpolate;
-        SetBallBounce(_ball);
+        ball.isKinematic = false;
+        ball.useGravity = true;
+        ball.mass = 0.55f;
+        ball.linearDamping = 0.01f;
+        ball.angularDamping = 0.02f;
+        ball.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        ball.interpolation = RigidbodyInterpolation.Interpolate;
+        SetBallBounce(ball);
 
         for (int i = 1; i <= 4; i++)
         {
             _playerBodies[i] = EnsureDynamic(_players[i]);
+            if (_players[i] == null)
+            {
+                continue;
+            }
+
+            PlayerMark mark = _players[i].GetComponent<PlayerMark>();
+            if (mark != null)
+            {
+                mark.PlayerId = i;
+            }
         }
 
         StartCoroutine(SnapshotAfterPhysics());
@@ -54,17 +81,104 @@ public class Host_World : MonoBehaviour
         }
 
         PhysicsMaterial material = new PhysicsMaterial("BallBounce");
-        material.bounciness = 0.9f;
+        material.bounciness = 0.95f;
         material.dynamicFriction = 0.1f;
         material.staticFriction = 0.1f;
         material.bounceCombine = PhysicsMaterialCombine.Maximum;
         material.frictionCombine = PhysicsMaterialCombine.Average;
+        _bounceMaterial = material;
         collider.material = material;
+    }
+
+    private void Update()
+    {
+        _spawnTimer += Time.deltaTime;
+        if (_spawnTimer < SpawnInterval)
+        {
+            return;
+        }
+
+        _spawnTimer = 0f;
+        SpawnBall();
+    }
+
+    /// <summary>
+    /// 主机每 15 秒在房间里再生成一颗球
+    /// </summary>
+    private void SpawnBall()
+    {
+        if (_balls.Count == 0)
+        {
+            return;
+        }
+
+        GameObject source = _balls[0].gameObject;
+        GameObject ballObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        ballObject.name = "Ball_" + _nextBallId;
+        ballObject.transform.localScale = source.transform.localScale;
+        ballObject.transform.position = new Vector3(Random.Range(-11f, 11f), 0.6f, Random.Range(-11f, 11f));
+        Renderer sourceRenderer = source.GetComponent<Renderer>();
+        Renderer ballRenderer = ballObject.GetComponent<Renderer>();
+        if (sourceRenderer != null && ballRenderer != null)
+        {
+            ballRenderer.sharedMaterial = sourceRenderer.sharedMaterial;
+        }
+
+        Rigidbody body = ballObject.AddComponent<Rigidbody>();
+        body.isKinematic = false;
+        body.useGravity = true;
+        body.mass = 0.55f;
+        body.linearDamping = 0.01f;
+        body.angularDamping = 0.02f;
+        body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        body.interpolation = RigidbodyInterpolation.Interpolate;
+        Collider collider = ballObject.GetComponent<Collider>();
+        if (collider != null && _bounceMaterial != null)
+        {
+            collider.material = _bounceMaterial;
+        }
+
+        BallMark mark = ballObject.AddComponent<BallMark>();
+        mark.BallId = _nextBallId;
+        ballObject.AddComponent<BallTouch>();
+        _nextBallId++;
+        _balls.Add(body);
+        LogMsg.Info("生成球::" + ballObject.name + "  " + ballObject.transform.position);
+    }
+
+    /// <summary>
+    /// 玩家碰到球。主机自己直接显示，其它人只通知对应客户端
+    /// </summary>
+    public void OnBallTapped(int playerId)
+    {
+        if (playerId == BallRoomPlayerMgr.Instance.LocalPlayerId)
+        {
+            if (GameRoom.Instance != null)
+            {
+                GameRoom.Instance.ShowTapped();
+            }
+            return;
+        }
+
+        TappedRet ret = new TappedRet()
+        {
+            PlayerId = playerId,
+        };
+        Dictionary<int, Session> sessionDic = SessionMgr.Instance.GetSessionDic();
+        foreach (KeyValuePair<int, Session> item in sessionDic)
+        {
+            if (item.Value._roleId != playerId)
+            {
+                continue;
+            }
+
+            item.Value.SendData(NetDefine.CMD_TappedCode, ret.ToByteString());
+        }
     }
 
     private void FixedUpdate()
     {
-        if (_ball == null)
+        if (_balls.Count == 0)
         {
             return;
         }
@@ -145,23 +259,20 @@ public class Host_World : MonoBehaviour
         WorldSnapshot snapshot = new WorldSnapshot()
         {
             Tick = _tick,
-            Ball = new BallState()
-            {
-                PosX = _ball.position.x,
-                PosY = _ball.position.y,
-                PosZ = _ball.position.z,
-                VelX = _ball.linearVelocity.x,
-                VelY = _ball.linearVelocity.y,
-                VelZ = _ball.linearVelocity.z,
-                AngVelX = _ball.angularVelocity.x,
-                AngVelY = _ball.angularVelocity.y,
-                AngVelZ = _ball.angularVelocity.z,
-                RotX = _ball.rotation.x,
-                RotY = _ball.rotation.y,
-                RotZ = _ball.rotation.z,
-                RotW = _ball.rotation.w,
-            },
+            Ball = MakeBallState(_balls[0], 1),
         };
+        for (int i = 0; i < _balls.Count; i++)
+        {
+            Rigidbody body = _balls[i];
+            if (body == null)
+            {
+                continue;
+            }
+
+            BallMark mark = body.GetComponent<BallMark>();
+            int ballId = mark != null ? mark.BallId : i + 1;
+            snapshot.Balls.Add(MakeBallState(body, ballId));
+        }
 
         List<int> playerIds = BallRoomPlayerMgr.Instance.PlayerIds;
         for (int i = 0; i < playerIds.Count; i++)
@@ -186,6 +297,27 @@ public class Host_World : MonoBehaviour
         Host_WorldBC.Instance.SnapshotBC(snapshot);
     }
 
+    private BallState MakeBallState(Rigidbody body, int ballId)
+    {
+        return new BallState()
+        {
+            BallId = ballId,
+            PosX = body.position.x,
+            PosY = body.position.y,
+            PosZ = body.position.z,
+            VelX = body.linearVelocity.x,
+            VelY = body.linearVelocity.y,
+            VelZ = body.linearVelocity.z,
+            AngVelX = body.angularVelocity.x,
+            AngVelY = body.angularVelocity.y,
+            AngVelZ = body.angularVelocity.z,
+            RotX = body.rotation.x,
+            RotY = body.rotation.y,
+            RotZ = body.rotation.z,
+            RotW = body.rotation.w,
+        };
+    }
+
     /// <summary>
     /// 动态刚体。会和墙、其它玩家、球发生碰撞
     /// </summary>
@@ -208,6 +340,13 @@ public class Host_World : MonoBehaviour
         body.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         body.isKinematic = false;
+
+        PlayerMark mark = player.GetComponent<PlayerMark>();
+        if (mark == null)
+        {
+            mark = player.AddComponent<PlayerMark>();
+        }
+
         return body;
     }
 }

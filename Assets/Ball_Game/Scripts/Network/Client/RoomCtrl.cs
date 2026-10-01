@@ -17,6 +17,7 @@ public class RoomCtrl
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_JoinRoomCode, OnJoinRoomHandle);
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_PlayerEnterCode, OnPlayerEnterHandle);
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_PlayerExitCode, OnPlayerExitHandle);
+        SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_TappedCode, OnTappedHandle);
         SocketDispatch.Instance.AddEventHandle(NetDefine.CMD_ErrCode, OnErrHandle);
     }
 
@@ -56,6 +57,17 @@ public class RoomCtrl
     {
         PlayerExitRet ret = PlayerExitRet.Parser.ParseFrom(data);
         BallRoomPlayerMgr.Instance.RemovePlayer(ret.PlayerId);
+    }
+
+    /// <summary>
+    /// 碰到球
+    /// </summary>
+    private void OnTappedHandle(ByteString data)
+    {
+        if (GameRoom.Instance != null)
+        {
+            GameRoom.Instance.ShowTapped();
+        }
     }
 
     /// <summary>
