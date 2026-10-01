@@ -18,3 +18,17 @@ enum CmdCode {
 message ErrMsg {
   CmdCode cmd_code = 1;
 }
+
+// 加入房间请求
+message JoinRoomReq {
+}
+
+// 加入房间返回，带回分配到的玩家编号
+message JoinRoomRet {
+  int32 player_id = 1;
+}
+
+// 有玩家进入，广播给房间里其它人
+message PlayerEnterRet {
+  int32 player_id = 1;
+}

@@ -1,10 +1,15 @@
+using Google.Protobuf;
+
 /**
  * Title: 房间主机指令处理
- * Description: 对应原来的 Game_RoleCtrl。进房和输入的具体逻辑后面再补
+ * Description: 对应原来的 Game_RoleCtrl。处理加入房间
  */
 
 public class Host_RoomCtrl : IContainer
 {
+    //主机自己是 1 号，后面进来的从 2 开始
+    private int _playerId = 1;
+
     public void OnInit()
     {
     }
@@ -37,7 +42,33 @@ public class Host_RoomCtrl : IContainer
     /// </summary>
     private void OnJoinRoomHandle(ServerBase serverBase, BasePackage basePackage)
     {
-        LogMsg.Info("收到进房请求，逻辑后续再写");
+        JoinRoomReq req = JoinRoomReq.Parser.ParseFrom(basePackage.Data);
+        LogMsg.Info("获取加入房间请求 OnJoinRoomHandle::" + req.ToString());
+
+        //1. 算上主机最多 4 人。当前这条连接已经在 Session 里
+        if (SessionMgr.Instance.GetSessionCount() > 3)
+        {
+            serverBase.SendError(basePackage, CmdCode.RoomFull);
+            return;
+        }
+
+        //2. 分配玩家编号
+        _playerId++;
+        Session session = (Session)serverBase;
+        session._roleId = _playerId;
+
+        JoinRoomRet ret = new JoinRoomRet()
+        {
+            PlayerId = _playerId,
+        };
+        serverBase.SendData(basePackage, NetDefine.CMD_JoinRoomCode, ret.ToByteString());
+
+        //3. 把这个玩家同步给房间里其它客户端
+        PlayerEnterRet enterRet = new PlayerEnterRet()
+        {
+            PlayerId = _playerId,
+        };
+        Host_WorldBC.Instance.PlayerEnterBC(session, enterRet);
     }
 
     /// <summary>

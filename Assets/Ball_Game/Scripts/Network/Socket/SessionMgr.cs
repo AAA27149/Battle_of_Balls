@@ -63,6 +63,15 @@ public class SessionMgr : Singleton<SessionMgr> //管理所有用户的连接
     {
         return _sessionDic.Count;
     }
+
+    /// <summary>
+    /// 返回所有连接，广播时用
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, Session> GetSessionDic()
+    {
+        return _sessionDic;
+    }
     
     public int GetInstanceInter()
     {

@@ -17,10 +17,13 @@ public class RoomEntry : MonoBehaviour
 
     private HostApp _hostApp;
     private SynchronizationContext _syncContext;
+    private RoomCtrl _roomCtrl;
 
     private void Awake()
     {
         _syncContext = SynchronizationContext.Current;
+        //先注册进房回包，再 Init。错误码只能注册一次，这里先占上
+        _roomCtrl = new RoomCtrl(this);
         NetSocketMgr.Instance.Init();
         _hostApp = GetComponent<HostApp>();
     }
@@ -31,7 +34,7 @@ public class RoomEntry : MonoBehaviour
     public void OnCreateRoomBtnClick()
     {
         _hostApp.StartHost();
-        _txtStatus.text = "已创建房间，等待其它客户端加入  " + NetDefine.IPHost + ":" + NetDefine.RoomPort;
+        SetStatus("已创建房间，等待其它客户端加入  " + NetDefine.IPHost + ":" + NetDefine.RoomPort);
     }
 
     /// <summary>
@@ -42,23 +45,28 @@ public class RoomEntry : MonoBehaviour
         //1. 本窗口已经是主机，就不要再连自己
         if (_hostApp.IsHost)
         {
-            _txtStatus.text = "本窗口已经是主机，请另开一个客户端再加入";
+            SetStatus("本窗口已经是主机，请另开一个客户端再加入");
             return;
         }
 
         //2. 连接房间主机
-        _txtStatus.text = "正在连接 " + NetDefine.IPHost + ":" + NetDefine.RoomPort;
+        SetStatus("正在连接 " + NetDefine.IPHost + ":" + NetDefine.RoomPort);
         NetSocketMgr.Instance.ConnectServer(NetDefine.IPHost, NetDefine.RoomPort, OnConnSucceed, OnConnFailed);
     }
 
     private void OnConnSucceed()
     {
-        //连接回调在收包线程，文字要丢回主线程
-        _syncContext.Post(_ => { _txtStatus.text = "已连接房间主机"; }, null);
+        //连接回调在收包线程。和登录一样，连上就发请求
+        _roomCtrl.JoinRoom();
     }
 
     private void OnConnFailed()
     {
-        _syncContext.Post(_ => { _txtStatus.text = "连接房间主机失败"; }, null);
+        _syncContext.Post(_ => { SetStatus("连接房间主机失败"); }, null);
+    }
+
+    public void SetStatus(string text)
+    {
+        _txtStatus.text = text;
     }
 }
